@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - student-management-network
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: studentmanagement
+      POSTGRES_USER: saquib
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5335:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - student-management-network
+
+networks:
+  student-management-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+
